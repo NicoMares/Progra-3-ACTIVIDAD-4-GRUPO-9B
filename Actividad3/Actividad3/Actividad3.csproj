@@ -67,15 +67,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChooseItemSite.aspx" />
+    <Content Include="ErrorSite.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="RegisterSite.aspx" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChooseItemSite.aspx.cs">
+      <DependentUpon>ChooseItemSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChooseItemSite.aspx.designer.cs">
+      <DependentUpon>ChooseItemSite.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\E_Articulo.cs" />
     <Compile Include="Entidades\E_Categoria.cs" />
     <Compile Include="Entidades\E_Imagen.cs" />
     <Compile Include="Entidades\E_Marca.cs" />
+    <Compile Include="ErrorSite.aspx.cs">
+      <DependentUpon>ErrorSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorSite.aspx.designer.cs">
+      <DependentUpon>ErrorSite.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -85,6 +102,13 @@
     <Compile Include="Logica\L_Marca.cs" />
     <Compile Include="Logica\L_Validacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterSite.aspx.cs">
+      <DependentUpon>RegisterSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterSite.aspx.designer.cs">
+      <DependentUpon>RegisterSite.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
