@@ -1,0 +1,36 @@
+# Ignore the VS folder
+.vs/
+
+# Ignore the build output directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Ignore Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Ignore JetBrains Rider files
+.idea/
+
+# Ignore ASP.NET temporary files
+App_Data/
+_UpgradeReport_Files/
+UpgradeLog.xml
+
+# Ignore NuGet files
+.nuget/
+packages/
+
+# Ignore web.config transformations (optional, depending on your project)
+web.config.transform
+
+# Ignore the ASP.NET files generated for publishing
+publish/
