@@ -84,6 +84,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\HojaDeEstilosEquipo.css" />
     <Content Include="ErrorSite.aspx" />
     <Content Include="Global.asax" />
     <Content Include="RegisterSite.aspx" />
