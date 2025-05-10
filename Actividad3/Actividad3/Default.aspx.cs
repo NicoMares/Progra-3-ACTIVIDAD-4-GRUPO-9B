@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +12,26 @@ namespace Actividad3
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+          
+        }
 
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+
+            string codigo = txtCodigo.Text;
+
+            try
+            {
+
+
+                Response.Redirect("ChooseItemSite.aspx");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
