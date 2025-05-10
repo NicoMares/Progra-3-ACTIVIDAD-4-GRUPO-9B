@@ -28,7 +28,7 @@ namespace Logica
                       "FROM ARTICULOS A " +
                       "LEFT JOIN MARCAS M ON A.IdMarca = M.Id " +
                       "LEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id " +
-                      "LEFT JOIN IMAGENES I ON A.Id = I.Id");// Ajusta según tu tabla y columnas
+                      "LEFT JOIN IMAGENES I ON A.Id = I.IdArticulo");// Ajusta según tu tabla y columnas
 
             // Ejecutar la consulta
             try
@@ -61,10 +61,10 @@ namespace Logica
                         aux.Categoria = new E_Categoria();
                         aux.Categoria.Descripcion = conexion.Lector["Categoria"] != DBNull.Value ? (string)conexion.Lector["Categoria"] : string.Empty;
                         aux.ImagenUrl = new E_Imagen();
-                        aux.ImagenUrl.Id = conexion.Lector["Id"] != DBNull.Value ? (int)conexion.Lector["Id"] : 0;
+                        //aux.ImagenUrl.Id = conexion.Lector["Id"] != DBNull.Value ? (int)conexion.Lector["Id"] : 0;
 
                         //aux.ImagenUrl = new E_Imagen();
-                        // aux.ImagenUrl.ImagenUrl = conexion.Lector["ImagenUrl"] != DBNull.Value ? (string)conexion.Lector["ImagenUrl"] : string.Empty;
+                         aux.ImagenUrl.ImagenUrl = conexion.Lector["ImagenUrl"] != DBNull.Value ? (string)conexion.Lector["ImagenUrl"] : string.Empty;
 
                         // Agregar a la lista
                         lista.Add(aux);
