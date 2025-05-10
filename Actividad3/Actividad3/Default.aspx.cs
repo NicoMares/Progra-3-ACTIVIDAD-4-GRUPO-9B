@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logica.Logica;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -17,14 +18,29 @@ namespace Actividad3
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-
+            L_Voucher l_Voucher = new L_Voucher();
             string codigo = txtCodigo.Text;
 
             try
             {
+                if (l_Voucher.ExisteVoucher(codigo))
+                {
+                    if (l_Voucher.VoucherVigente(codigo))
+                    {
+                        Response.Redirect("ChooseItemSite.aspx",false);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "alert('El voucher ya fue canjeado');", true);
+                    }
 
+                }
+                else
+                {
 
-                Response.Redirect("ChooseItemSite.aspx");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "alert('El voucher no existe');", true);
+
+                }
 
             }
             catch (Exception)
