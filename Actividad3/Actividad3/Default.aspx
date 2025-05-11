@@ -14,7 +14,7 @@
             <div class="col-auto">
 
                 <asp:TextBox ID="txtCodigo" runat="server" placeholder="Cacatua08" TextMode="SingleLine" CssClass="form-control"></asp:TextBox>
-                <a href="RegisterSite.aspx" >Ir al otro formulario</a>
+                
             </div>
 
             <div  class="col-auto">

@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Logica;
+using Logica.Logica;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,30 @@ namespace Actividad3
             listaArticulos = l_articulo.Listar();
 
         }
+
+        protected void btnElegirPremio_Click(object sender, EventArgs e)
+        {
+            string codigo = Request.QueryString["codigo"];
+            int idArt = int.Parse(((Button)sender).CommandArgument);
+            L_Voucher logica = new L_Voucher();
+            if(logica.ArticuloVinculadoAVoucher(idArt))
+            Response.Redirect("RegisterSite.aspx?id=" + idArt);
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "alert('Este premio ya fue canjeado');", true);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

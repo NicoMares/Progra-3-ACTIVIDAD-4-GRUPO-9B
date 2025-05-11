@@ -18,7 +18,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%: art.Nombre %></h5>
                                 <p class="card-text"><%: art.Descripcion %></p>
-                                 <a href="RegisterSite.aspx?id=<%: art.IdArt %>" class="btn btn-primary">Elegir premio</a>
+                                <asp:Button ID="btnElegirPremio" runat="server" CssClass="btn btn-primary" Text="Elegir premio" OnClick="btnElegirPremio_Click" CommandArgument='<%: art.IdArt %>' />
                             </div>
                         </div>
                        

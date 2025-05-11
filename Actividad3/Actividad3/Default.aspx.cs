@@ -27,7 +27,8 @@ namespace Actividad3
                 {
                     if (l_Voucher.VoucherVigente(codigo))
                     {
-                        Response.Redirect("ChooseItemSite.aspx",false);
+                        Session["codigoVoucher"] = codigo;
+                        Response.Redirect("ChooseItemSite.aspx", false);
                     }
                     else
                     {
