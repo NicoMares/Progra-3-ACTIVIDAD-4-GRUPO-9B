@@ -28,6 +28,10 @@ namespace Actividad3
                     case "excepcion_general":
                         mensaje = "Ocurrió un error inesperado. Intente más tarde.";
                         break;
+                    case "articulo_canjeado":
+                        mensaje = "Articulo ya fue canjeado con otro Voucher";
+                        break;
+                      
                     default:
                         mensaje = "Error desconocido.";
                         break;
