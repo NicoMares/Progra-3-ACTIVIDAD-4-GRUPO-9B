@@ -65,7 +65,56 @@ namespace Actividad3
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string email = txtEmail.Text.Trim();
+            string direccion = txtDireccion.Text.Trim();
+            string ciudad = txtCiudad.Text.Trim();
+            string cp = txtCP.Text.Trim();
 
+            // Validaciones básicas
+            if (string.IsNullOrEmpty(nombre))
+            {
+                
+                Response.Write("El nombre no puede estar vacío.<br>");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(apellido))
+            {
+                Response.Write("El apellido no puede estar vacío.<br>");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(email) || !email.Contains("@") || !email.Contains("."))
+            {
+                Response.Write("El email no es válido.<br>");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(direccion))
+            {
+                Response.Write("La dirección no puede estar vacía.<br>");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ciudad))
+            {
+                Response.Write("La ciudad no puede estar vacía.<br>");
+                return;
+            }
+
+            if (!int.TryParse(cp, out int codigoPostal) || codigoPostal <= 0)
+            {
+                Response.Write("El código postal debe ser un número válido mayor que 0.<br>");
+                return;
+            }
+
+            // Si todas las validaciones pasan, podés guardar
+            // aux.Nombre = nombre; etc.
+
+            Response.Write("Datos guardados correctamente.");
+            Response.Redirect("Default.aspx");
         }
     }
 }

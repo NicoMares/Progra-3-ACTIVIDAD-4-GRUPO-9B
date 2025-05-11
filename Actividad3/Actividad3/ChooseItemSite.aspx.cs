@@ -43,10 +43,11 @@ namespace Actividad3
                 
                 if (int.TryParse(btn.CommandArgument, out int idArt))
                 {
-                 
+                    
                     L_Voucher logica = new L_Voucher();
                     if (!(logica.ArticuloVinculadoAVoucher(idArt)))
                     {
+                        Session["IdArticulo"] = idArt;
                         Response.Redirect("RegisterSite.aspx?id=" + idArt);
                     }
                     else
