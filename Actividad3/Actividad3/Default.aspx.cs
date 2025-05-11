@@ -32,14 +32,14 @@ namespace Actividad3
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "alert('El voucher ya fue canjeado');", true);
+                        Response.Redirect("ErrorSite.aspx?error=voucher_canjeado", false);
                     }
 
                 }
                 else
                 {
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "alert('El voucher no existe');", true);
+                    Response.Redirect("ErrorSite.aspx?error=voucher_inexistente", false);
 
                 }
 

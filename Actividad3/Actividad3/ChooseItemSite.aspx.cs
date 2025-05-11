@@ -52,14 +52,12 @@ namespace Actividad3
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup",
-                            "alert('Este premio ya fue canjeado');", true);
+                        Response.Redirect("ErrorSite.aspx?error=articulo_canjeado", false);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup",
-                        "alert('Error al procesar el premio.');", true);
+                    Response.Redirect("ErrorSite.aspx?error=error_articulo", false);
                 }
             }
 

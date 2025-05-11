@@ -12,6 +12,49 @@ namespace Actividad3
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (!IsPostBack)
+            {
+                string error = Request.QueryString["error"];
+                string mensaje = "";
+
+                switch (error)
+                {
+                    case "voucher_canjeado":
+                        mensaje = "El voucher ya fue canjeado.";
+                        break;
+                    case "voucher_inexistente":
+                        mensaje = "El voucher no existe.";
+                        break;
+                    case "excepcion_general":
+                        mensaje = "Ocurrió un error inesperado. Intente más tarde.";
+                        break;
+                    default:
+                        mensaje = "Error desconocido.";
+                        break;
+                }
+
+                lblMensaje.Text = mensaje;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }
