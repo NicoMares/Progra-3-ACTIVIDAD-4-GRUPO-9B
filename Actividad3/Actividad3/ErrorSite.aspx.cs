@@ -25,6 +25,9 @@ namespace Actividad3
                     case "voucher_inexistente":
                         mensaje = "El voucher no existe.";
                         break;
+                    case "error_al_guardar":
+                        mensaje = "Error al registrar el canje.";
+                        break;
                     case "excepcion_general":
                         mensaje = "Ocurrió un error inesperado. Intente más tarde.";
                         break;
@@ -39,23 +42,6 @@ namespace Actividad3
 
                 lblMensaje.Text = mensaje;
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

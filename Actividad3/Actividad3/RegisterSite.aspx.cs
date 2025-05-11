@@ -11,18 +11,18 @@ namespace Actividad3
 {
     public partial class RegisterSite : System.Web.UI.Page
     {
+        E_Clientes aux = new E_Clientes();
+        L_Clientes aux2 = new L_Clientes();
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            lblStatusMessage.Visible = false;
+            lblStatusMessage.Text = string.Empty;
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
 
-            E_Clientes aux = new E_Clientes();
-            L_Clientes aux2 = new L_Clientes();
-
-            
             string dni = txtDNI.Text.Trim();
 
             if (string.IsNullOrEmpty(dni))
@@ -32,7 +32,7 @@ namespace Actividad3
             }
             else
             {
-               
+
                 if (!aux2.ExisteDni(dni))
                 {
                     txtNombre.Text = "";
@@ -42,13 +42,26 @@ namespace Actividad3
                     txtCiudad.Text = "";
                     txtCP.Text = "";
 
+                    lblStatusMessage.Text = "Participante no encontrado. Por favor, ingrese sus datos.";
+                    lblStatusMessage.CssClass = "alert alert-warning";
+                    lblStatusMessage.Visible = true;
+
+                    txtNombre.Enabled = true;
+                    txtApellido.Enabled = true;
+                    txtEmail.Enabled = true;
+                    txtDireccion.Enabled = true;
+                    txtCiudad.Enabled = true;
+                    txtCP.Enabled = true;
+
+                    btnGuardar.Visible = true;
+                    btnParticipar.Visible = false;
                 }
                 else
                 {
-                   
+
                     aux = aux2.BuscarClientePorDni(dni);
 
-                   
+
                     txtNombre.Text = aux.Nombre;
                     txtApellido.Text = aux.Apellido;
                     txtEmail.Text = aux.Email;
@@ -56,8 +69,21 @@ namespace Actividad3
                     txtCiudad.Text = aux.Ciudad;
                     txtCP.Text = aux.CP.ToString();
 
-                    
-                    
+                    txtNombre.Enabled = true;
+                    txtApellido.Enabled = true;
+                    txtEmail.Enabled = true;
+                    txtDireccion.Enabled = true;
+                    txtCiudad.Enabled = true;
+                    txtCP.Enabled = true;
+
+                    lblStatusMessage.Text = "¡Participante encontrado!";
+                    lblStatusMessage.CssClass = "alert alert-success";  // Estilo para mensaje de éxito
+                    lblStatusMessage.Visible = true;
+
+                    // Mostrar el botón de "Participar" y ocultar el de "Guardar"
+                    btnGuardar.Visible = false;
+                    btnParticipar.Visible = true;
+
                 }
             }
 
@@ -65,6 +91,10 @@ namespace Actividad3
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            lblError.CssClass = "alert alert-danger mt-3";
+            lblError.Visible = false;
+
+            string dni = txtDNI.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
             string email = txtEmail.Text.Trim();
@@ -72,49 +102,125 @@ namespace Actividad3
             string ciudad = txtCiudad.Text.Trim();
             string cp = txtCP.Text.Trim();
 
-            // Validaciones básicas
             if (string.IsNullOrEmpty(nombre))
             {
-                
-                Response.Write("El nombre no puede estar vacío.<br>");
+                lblError.Text = "El nombre no puede estar vacío.";
+                lblError.Visible = true;
                 return;
             }
 
             if (string.IsNullOrEmpty(apellido))
             {
-                Response.Write("El apellido no puede estar vacío.<br>");
+                lblError.Text = "El apellido no puede estar vacío.";
+                lblError.Visible = true;
                 return;
             }
 
             if (string.IsNullOrEmpty(email) || !email.Contains("@") || !email.Contains("."))
             {
-                Response.Write("El email no es válido.<br>");
+                lblError.Text = "El email no es válido.";
+                lblError.Visible = true;
                 return;
             }
 
             if (string.IsNullOrEmpty(direccion))
             {
-                Response.Write("La dirección no puede estar vacía.<br>");
+                lblError.Text = "La dirección no puede estar vacía.";
+                lblError.Visible = true;
                 return;
             }
 
             if (string.IsNullOrEmpty(ciudad))
             {
-                Response.Write("La ciudad no puede estar vacía.<br>");
+                lblError.Text = "La ciudad no puede estar vacía.";
+                lblError.Visible = true;
                 return;
             }
 
             if (!int.TryParse(cp, out int codigoPostal) || codigoPostal <= 0)
             {
-                Response.Write("El código postal debe ser un número válido mayor que 0.<br>");
+                lblError.Text = "El código postal debe ser un número válido mayor que 0.";
+                lblError.Visible = true;
                 return;
             }
 
-            // Si todas las validaciones pasan, podés guardar
-            // aux.Nombre = nombre; etc.
 
-            Response.Write("Datos guardados correctamente.");
-            Response.Redirect("Default.aspx");
+            aux.Nombre = nombre;
+            aux.Documento = dni;
+            aux.Apellido = apellido;
+            aux.Email = email;
+            aux.Direccion = direccion;
+            aux.Ciudad = ciudad;
+            aux.CP = codigoPostal;
+
+            if (aux2.AgregarCliente(aux))
+
+            {
+                lblError.CssClass = "alert alert-success mt-3";
+                lblError.Text = "Cliente agregado exitosamente.";
+                lblError.Visible = true;
+
+                ProcesarCanje();
+            }
+            else
+            {
+                lblError.Text = "Hubo un error al agregar el cliente. Intente nuevamente.";
+                lblError.Visible = true;
+            }
+
+
         }
+
+        protected void btnParticipar_Click(object sender, EventArgs e)
+        {
+            ProcesarCanje();
+        }
+
+        private void ProcesarCanje()
+        {
+            L_Voucher lVoucher = new L_Voucher();
+            L_Clientes lCliente = new L_Clientes();
+
+            string codigoVoucher = Session["codigoVoucher"] as string;
+            object idArticuloObj = Session["IdArticulo"];
+            string dni = txtDNI.Text.Trim();
+
+            if (string.IsNullOrEmpty(codigoVoucher) || idArticuloObj == null)
+            {
+                Response.Redirect("ErrorSite.aspx?error=session_invalida", false);
+                return;
+            }
+
+            int idArticulo = (int)idArticuloObj;
+            E_Clientes cliente = lCliente.BuscarClientePorDni(dni);
+
+            if (cliente == null)
+            {
+                Response.Redirect("ErrorSite.aspx?error=cliente_no_encontrado", false);
+                return;
+            }
+
+            E_Vouchers voucherActualizado = new E_Vouchers
+            {
+                CodigoVoucher = codigoVoucher,
+                IdCliente = cliente.id,
+                FechaCanje = DateTime.Now,
+                IdArticulo = idArticulo
+            };
+
+            bool exito = lVoucher.RegistrarCanje(voucherActualizado);
+
+            if (exito)
+            {
+                Response.Redirect("Default.aspx");
+            }
+            else
+            {
+                Response.Redirect("ErrorSite.aspx?error=error_al_guardar");
+            }
+        }
+
+
+
     }
 }

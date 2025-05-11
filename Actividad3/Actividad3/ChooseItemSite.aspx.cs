@@ -13,25 +13,23 @@ namespace Actividad3
     public partial class ChooseItemSite : System.Web.UI.Page
     {
         public List<E_Articulo> listaArticulos { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            L_Articulo l_articulo = new L_Articulo(); 
+            L_Articulo l_articulo = new L_Articulo();
+            L_Imagen l_Imagen = new L_Imagen();
             L_Voucher voucher = new L_Voucher();
             listaArticulos = l_articulo.Listar();
 
-           
-      List<Entidades.E_Articulo> listaFiltrada = listaArticulos
-    .Where(a => !(voucher.ArticuloVinculadoAVoucher(a.IdArt))) 
-    .GroupBy(a => a.IdArt) 
-    .Select(g => g.First()) 
-    .ToList();
+            List<Entidades.E_Articulo> listaFiltrada = listaArticulos
+          .Where(a => !(voucher.ArticuloVinculadoAVoucher(a.IdArt)))
+          .GroupBy(a => a.IdArt)
+          .Select(g => g.First())
+          .ToList();
 
-
-            rptArticulos.DataSource = listaArticulos;
+            rptArticulos.DataSource = listaFiltrada;
             rptArticulos.DataBind();
         }
+
 
         protected void btnElegirPremio_Click(object sender, EventArgs e)
         {
@@ -40,10 +38,10 @@ namespace Actividad3
 
             if (btn != null)
             {
-                
+
                 if (int.TryParse(btn.CommandArgument, out int idArt))
                 {
-                    
+
                     L_Voucher logica = new L_Voucher();
                     if (!(logica.ArticuloVinculadoAVoucher(idArt)))
                     {
@@ -63,16 +61,6 @@ namespace Actividad3
 
 
         }
-
-
-
-
-
-
-
-
-
-
 
 
     }

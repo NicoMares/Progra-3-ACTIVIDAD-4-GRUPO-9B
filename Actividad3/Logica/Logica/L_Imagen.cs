@@ -38,7 +38,7 @@ namespace Logica.Logica
             try
             {
                 
-                conexion.Consulta(@"SELECT ImagenUrl, Id as IdImagen FROM IMAGENES  WHERE IdArticulo = @id");
+                conexion.Consulta(@"SELECT ImagenUrl, Id as IdImagen, IDArticulo FROM IMAGENES  WHERE IdArticulo = @id");
 
                 conexion.SetParametros("@id", id);  
                 conexion.Ejecutar();
@@ -48,6 +48,7 @@ namespace Logica.Logica
                     E_Imagen imagen = new E_Imagen();
                     imagen.ImagenUrl = (string)conexion.Lector["ImagenUrl"];
                     imagen.Id = (int)conexion.Lector["IdImagen"];
+                    imagen.IdArticulo = (int)conexion.Lector["IDArticulo"];
                     listaImagenes.Add(imagen);  
                 }
 

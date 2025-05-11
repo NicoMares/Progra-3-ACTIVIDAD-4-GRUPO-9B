@@ -22,7 +22,6 @@ namespace Entidades
         public E_Categoria Categoria { get; set; }
         public E_Imagen ImagenUrl { get; set; }
 
-
-
+        // public List<E_Imagen> Imagenes { get; set; } = new List<E_Imagen>();
     }
 }

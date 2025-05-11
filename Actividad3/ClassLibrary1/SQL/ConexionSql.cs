@@ -25,9 +25,9 @@ namespace Logica.Logica
         {
             try
             {
-                conexion = new SqlConnection(@"Server=.\SQLEXPRESS;Database=PROMOS_DB;Integrated Security=True");
+                //conexion = new SqlConnection(@"Server=.\SQLEXPRESS;Database=PROMOS_DB;Integrated Security=True");
                 //Conexion para base de datos con declaracion de usuario especifico con login de sql
-               // conexion.ConnectionString = "Server=ULARIAGA-BRAIAN\\LOCALHOST; Database= PROMOS_DB; User Id= sa; Password=Super123.adm "; /// Brian
+               conexion.ConnectionString = "Server=ULARIAGA-BRAIAN\\LOCALHOST; Database= PROMOS_DB; User Id= sa; Password=Super123.adm "; /// Brian
                
 
             }

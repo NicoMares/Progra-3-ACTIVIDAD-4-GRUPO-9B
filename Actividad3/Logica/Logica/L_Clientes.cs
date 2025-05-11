@@ -1,6 +1,7 @@
 ﻿using Entidades.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,10 +41,6 @@ namespace Logica.Logica
         }
 
 
-    
-
-
-    
         public E_Clientes BuscarClientePorDni(string DNI)
         {
             ConexionSql conexion = new ConexionSql();
@@ -52,7 +49,7 @@ namespace Logica.Logica
             try
             {
                 
-                conexion.Consulta("SELECT Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE Documento = @Documento");
+                conexion.Consulta("SELECT id, Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE Documento = @Documento");
                 conexion.SetParametros("@Documento", DNI);
 
                 conexion.Ejecutar();
@@ -62,6 +59,7 @@ namespace Logica.Logica
                   
                     cliente = new E_Clientes()
                     {
+                        id = Convert.ToInt32(conexion.Lector["id"]),
                         Documento = conexion.Lector["Documento"].ToString(),
                         Nombre = conexion.Lector["Nombre"].ToString(),
                         Apellido = conexion.Lector["Apellido"].ToString(),
@@ -83,10 +81,41 @@ namespace Logica.Logica
                 conexion.cerrarConexion();  
             }
         }
+
+        public bool AgregarCliente(E_Clientes cliente)
+        {
+            ConexionSql conexion = new ConexionSql();
+
+            try
+            {
+                conexion.Consulta("INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP) VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP)");
+
+                conexion.SetParametros("@Documento", cliente.Documento);
+                conexion.SetParametros("@Nombre", cliente.Nombre);
+                conexion.SetParametros("@Apellido", cliente.Apellido);
+                conexion.SetParametros("@Email", cliente.Email);
+                conexion.SetParametros("@Direccion", cliente.Direccion);
+                conexion.SetParametros("@Ciudad", cliente.Ciudad);
+                conexion.SetParametros("@CP", cliente.CP);
+
+                conexion.EjecutarAccion();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
+
     }
 
-
-
-
-
 }
+
+
