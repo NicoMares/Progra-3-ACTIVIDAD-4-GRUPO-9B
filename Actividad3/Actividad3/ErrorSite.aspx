@@ -11,7 +11,7 @@
     </div>--%>
 
     <div class="container text-center mt-5">
-    <asp:Panel ID="pnlAlerta" runat="server" CssClass="alert alert-danger" Visible="false">
+    <asp:Panel ID="pnlAlerta" runat="server" CssClass="alert alert-danger" Visible="true">
         <asp:Label ID="lblMensaje" runat="server" CssClass="fw-bold"></asp:Label>
     </asp:Panel>
     <a href="Default.aspx" class="btn btn-primary mt-4">Volver al inicio</a>

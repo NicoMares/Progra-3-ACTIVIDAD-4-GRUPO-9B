@@ -32,9 +32,23 @@ namespace Actividad3
                         mensaje = "Ocurrió un error inesperado. Intente más tarde.";
                         break;
                     case "articulo_canjeado":
-                        mensaje = "Articulo ya fue canjeado con otro Voucher";
+                        mensaje = "El artículo ya fue canjeado con otro voucher.";
                         break;
-                      
+                    case "cliente_no_encontrado":
+                        mensaje = "El cliente no fue encontrado.";
+                        break;
+                    case "session_invalida":
+                        mensaje = "La sesión ha expirado o no es válida.";
+                        break;
+                    case "dni_invalido":
+                        mensaje = "El DNI ingresado no es válido.";
+                        break;
+                    case "datos_incompletos":
+                        mensaje = "Faltan datos obligatorios. Complete todos los campos.";
+                        break;
+                    case "email_invalido":
+                        mensaje = "El formato del correo electrónico es incorrecto.";
+                        break;
                     default:
                         mensaje = "Error desconocido.";
                         break;

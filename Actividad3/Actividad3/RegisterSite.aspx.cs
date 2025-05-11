@@ -157,7 +157,7 @@ namespace Actividad3
 
             {
                 lblError.CssClass = "alert alert-success mt-3";
-                lblError.Text = "Cliente agregado exitosamente.";
+                
                 lblError.Visible = true;
 
                 ProcesarCanje();
@@ -212,7 +212,7 @@ namespace Actividad3
 
             if (exito)
             {
-                Response.Redirect("Default.aspx");
+                Response.Redirect("success.aspx", false);
             }
             else
             {
