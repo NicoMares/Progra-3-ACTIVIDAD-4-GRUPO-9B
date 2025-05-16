@@ -28,6 +28,10 @@ namespace Actividad3
 
             rptArticulos.DataSource = listaFiltrada;
             rptArticulos.DataBind();
+            if (listaFiltrada.Count == 0)
+            {
+                Response.Redirect("ErrorSite.aspx?error=sin_articulos", false);
+            }
         }
 
 

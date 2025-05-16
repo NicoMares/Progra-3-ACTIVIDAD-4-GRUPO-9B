@@ -49,6 +49,9 @@ namespace Actividad3
                     case "email_invalido":
                         mensaje = "El formato del correo electrónico es incorrecto.";
                         break;
+                    case "sin_articulos":
+                        mensaje = "No hay mas productos, lo sentimos.";
+                        break;
                     default:
                         mensaje = "Error desconocido.";
                         break;
