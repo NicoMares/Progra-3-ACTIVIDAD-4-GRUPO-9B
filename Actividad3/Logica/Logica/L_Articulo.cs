@@ -21,62 +21,56 @@ namespace Logica
             List<E_Articulo> lista = new List<E_Articulo>();
             ConexionSql conexion = new ConexionSql();
 
-            // Asegúrate de que la consulta esté bien formada y se esté ejecutando correctamente
             conexion.Consulta("SELECT A.Id, A.IdCategoria, A.IdMarca, A.Codigo, A.Nombre, A.Descripcion, A.Precio, " +
-                      "M.Descripcion AS Marca, C.Descripcion AS Categoria, I.ImagenUrl, I.Id  " +
-                      "FROM ARTICULOS A " +
-                      "LEFT JOIN MARCAS M ON A.IdMarca = M.Id " +
-                      "LEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id " +
-                      "LEFT JOIN IMAGENES I ON A.Id = I.IdArticulo"); // Ajusta según tu tabla y columnas
+                              "M.Descripcion AS Marca, C.Descripcion AS Categoria " +
+                              "FROM ARTICULOS A " +
+                              "LEFT JOIN MARCAS M ON A.IdMarca = M.Id " +
+                              "LEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id");
 
-            // Ejecutar la consulta
             try
             {
-                // Ejecutamos la consulta y leemos los resultados
                 conexion.Ejecutar();
 
-                // Si hay filas, las procesamos
                 if (conexion.Lector.HasRows)
                 {
                     while (conexion.Lector.Read())
                     {
-                        E_Articulo aux = new E_Articulo();
+                        E_Articulo aux = new E_Articulo
+                        {
+                            IdArt = conexion.Lector["Id"] != DBNull.Value ? (int)conexion.Lector["Id"] : 0,
+                            Codigo = conexion.Lector["Codigo"] != DBNull.Value ? (string)conexion.Lector["Codigo"] : string.Empty,
+                            Nombre = conexion.Lector["Nombre"] != DBNull.Value ? (string)conexion.Lector["Nombre"] : string.Empty,
+                            Descripcion = conexion.Lector["Descripcion"] != DBNull.Value ? (string)conexion.Lector["Descripcion"] : string.Empty,
+                            Precio = conexion.Lector["Precio"] != DBNull.Value ? (decimal)conexion.Lector["Precio"] : 0,
 
-                        // Verifica si el valor es nulo antes de asignar
-                        aux.IdArt = conexion.Lector["Id"] != DBNull.Value ? (int)conexion.Lector["Id"] : 0;
-                        aux.IdCategoria = conexion.Lector["IdCategoria"] != DBNull.Value ? (int)conexion.Lector["IdCategoria"] : 0;
-                        aux.Codigo = conexion.Lector["Codigo"] != DBNull.Value ? (string)conexion.Lector["Codigo"] : string.Empty;
-                        aux.Nombre = conexion.Lector["Nombre"] != DBNull.Value ? (string)conexion.Lector["Nombre"] : string.Empty;
-                        aux.Descripcion = conexion.Lector["Descripcion"] != DBNull.Value ? (string)conexion.Lector["Descripcion"] : string.Empty;
-                        aux.Precio = conexion.Lector["Precio"] != DBNull.Value ? (decimal)conexion.Lector["Precio"] : 0;
+                            Marca = new E_Marca
+                            {
+                                Id = conexion.Lector["IdMarca"] != DBNull.Value ? (int)conexion.Lector["IdMarca"] : 0,
+                                Descripcion = conexion.Lector["Marca"] != DBNull.Value ? (string)conexion.Lector["Marca"] : string.Empty
+                            },
 
-                        aux.Marca = new E_Marca();
-                        aux.Marca.Descripcion = conexion.Lector["Marca"] != DBNull.Value ? (string)conexion.Lector["Marca"] : string.Empty;
+                            Categoria = new E_Categoria
+                            {
+                                Id = conexion.Lector["IdCategoria"] != DBNull.Value ? (int)conexion.Lector["IdCategoria"] : 0,
+                                Descripcion = conexion.Lector["Categoria"] != DBNull.Value ? (string)conexion.Lector["Categoria"] : string.Empty
+                            }
+                        };
 
-                        aux.Categoria = new E_Categoria();
-                        aux.Categoria.Descripcion = conexion.Lector["Categoria"] != DBNull.Value ? (string)conexion.Lector["Categoria"] : string.Empty;
+                        L_Imagen logica = new L_Imagen();
+                        aux.ImagenUrl = logica.ListarImagenesPorID(aux.IdArt);
 
-                        aux.ImagenUrl = new E_Imagen();
-                        aux.ImagenUrl.ImagenUrl = conexion.Lector["ImagenUrl"] != DBNull.Value ? (string)conexion.Lector["ImagenUrl"] : string.Empty;
-          
-                        // Agregar a la lista de artículos
                         lista.Add(aux);
                     }
-
                 }
             }
             catch (Exception ex)
             {
-                // Manejo de errores
                 Console.WriteLine("Error al listar los artículos: " + ex.Message);
             }
             finally
             {
-                conexion.cerrarConexion(); // Asegúrate de cerrar la conexión
+                conexion.cerrarConexion();
             }
-
-            // Después de listar los artículos, buscamos las imágenes para cada uno
-           
 
             return lista;
         }
@@ -106,21 +100,24 @@ namespace Logica
                     {
                         E_Articulo aux = new E_Articulo();
 
-                        // Verifica si el valor es nulo antes de asignar
                         aux.IdArt = conexion.Lector["Id"] != DBNull.Value ? (int)conexion.Lector["Id"] : 0;
-                        aux.IdCategoria = conexion.Lector["IdCategoria"] != DBNull.Value ? (int)conexion.Lector["IdCategoria"] : 0;
                         aux.Codigo = conexion.Lector["Codigo"] != DBNull.Value ? (string)conexion.Lector["Codigo"] : string.Empty;
                         aux.Nombre = conexion.Lector["Nombre"] != DBNull.Value ? (string)conexion.Lector["Nombre"] : string.Empty;
                         aux.Descripcion = conexion.Lector["Descripcion"] != DBNull.Value ? (string)conexion.Lector["Descripcion"] : string.Empty;
                         aux.Precio = conexion.Lector["Precio"] != DBNull.Value ? (decimal)conexion.Lector["Precio"] : 0;
 
-                        aux.Marca = new E_Marca();
-                        aux.Marca.Descripcion = conexion.Lector["Marca"] != DBNull.Value ? (string)conexion.Lector["Marca"] : string.Empty;
+                        aux.Marca = new E_Marca
+                        {
+                            Id = conexion.Lector["IdMarca"] != DBNull.Value ? (int)conexion.Lector["IdMarca"] : 0,
+                            Descripcion = conexion.Lector["Marca"] != DBNull.Value ? (string)conexion.Lector["Marca"] : string.Empty
+                        };
 
-                        aux.Categoria = new E_Categoria();
-                        aux.Categoria.Descripcion = conexion.Lector["Categoria"] != DBNull.Value ? (string)conexion.Lector["Categoria"] : string.Empty;
+                        aux.Categoria = new E_Categoria
+                        {
+                            Id = conexion.Lector["IdCategoria"] != DBNull.Value ? (int)conexion.Lector["IdCategoria"] : 0,
+                            Descripcion = conexion.Lector["Categoria"] != DBNull.Value ? (string)conexion.Lector["Categoria"] : string.Empty
+                        };
 
-                        // Agregar a la lista de artículos
                         lista.Add(aux);
                     }
                 }
@@ -156,15 +153,25 @@ namespace Logica
                 if (conexion.Lector.Read())
                 {
                     aux.IdArt = (int)conexion.Lector["Id"];
-                    aux.IdCategoria = (int)conexion.Lector["IdCategoria"];
-                    aux.IdMarca = (int)conexion.Lector["IdMarca"];
                     aux.Codigo = (string)conexion.Lector["Codigo"];
                     aux.Nombre = (string)conexion.Lector["Nombre"];
                     aux.Descripcion = (string)conexion.Lector["Descripcion"];
                     aux.Precio = (decimal)conexion.Lector["Precio"];
-                    aux.Marca = new E_Marca { Descripcion = (string)conexion.Lector["Marca"] };
-                    aux.Categoria = new E_Categoria { Descripcion = (string)conexion.Lector["Categoria"] };
-                    aux.ImagenUrl = new E_Imagen { ImagenUrl = (string)conexion.Lector["ImagenUrl"] };
+
+                    aux.Marca = new E_Marca
+                    {
+                        Id = (int)conexion.Lector["IdMarca"],
+                        Descripcion = (string)conexion.Lector["Marca"]
+                    };
+
+                    aux.Categoria = new E_Categoria
+                    {
+                        Id = (int)conexion.Lector["IdCategoria"],
+                        Descripcion = (string)conexion.Lector["Categoria"]
+                    };
+
+                    L_Imagen logica = new L_Imagen();
+                    aux.ImagenUrl = logica.ListarImagenesPorID(aux.IdArt);
                 }
 
                 return aux;
@@ -235,16 +242,28 @@ namespace Logica
                 while (conexion.Lector.Read())
                 {
                     E_Articulo aux = new E_Articulo();
+
                     aux.IdArt = (int)conexion.Lector["Id"];
-                    aux.IdCategoria = (int)conexion.Lector["IdCategoria"];
-                    aux.IdMarca = (int)conexion.Lector["IdMarca"];
                     aux.Codigo = (string)conexion.Lector["Codigo"];
                     aux.Nombre = (string)conexion.Lector["Nombre"];
                     aux.Descripcion = (string)conexion.Lector["Descripcion"];
                     aux.Precio = (decimal)conexion.Lector["Precio"];
-                    aux.Marca = new E_Marca { Descripcion = (string)conexion.Lector["Marca"] };
-                    aux.Categoria = new E_Categoria { Descripcion = (string)conexion.Lector["Categoria"] };
-                    aux.ImagenUrl = new E_Imagen { ImagenUrl = (string)conexion.Lector["ImagenUrl"] };
+
+                    aux.Marca = new E_Marca
+                    {
+                        Id = (int)conexion.Lector["IdMarca"],
+                        Descripcion = (string)conexion.Lector["Marca"]
+                    };
+
+                    aux.Categoria = new E_Categoria
+                    {
+                        Id = (int)conexion.Lector["IdCategoria"],
+                        Descripcion = (string)conexion.Lector["Categoria"]
+                    };
+
+                    L_Imagen logica = new L_Imagen();
+                    aux.ImagenUrl = logica.ListarImagenesPorID(aux.IdArt);
+
                     listaArt.Add(aux);
                 }
 
