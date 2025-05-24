@@ -69,12 +69,12 @@ namespace Actividad3
                     txtCiudad.Text = aux.Ciudad;
                     txtCP.Text = aux.CP.ToString();
 
-                    txtNombre.Enabled = true;
-                    txtApellido.Enabled = true;
-                    txtEmail.Enabled = true;
-                    txtDireccion.Enabled = true;
-                    txtCiudad.Enabled = true;
-                    txtCP.Enabled = true;
+                    txtNombre.Enabled = false;
+                    txtApellido.Enabled = false;
+                    txtEmail.Enabled = false;
+                    txtDireccion.Enabled = false;
+                    txtCiudad.Enabled = false;
+                    txtCP.Enabled = false;
 
                     lblStatusMessage.Text = "¡Participante encontrado!";
                     lblStatusMessage.CssClass = "alert alert-success";  // Estilo para mensaje de éxito
